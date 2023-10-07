@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReTicket.Application.Abstractions;
-using ReTicket.Infrastructure.Repositories;
 using ReTicket.Persistence.Database;
+using ReTicket.Persistence.Repositories;
 
 namespace ReTicket.Persistence;
 

@@ -2,7 +2,7 @@
 using ReTicket.Persistence.Database;
 using System.Linq.Expressions;
 
-namespace ReTicket.Infrastructure
+namespace ReTicket.Persistence.Repositories
 {
     public abstract class BaseRepository<T> where T : class
     {
@@ -18,13 +18,13 @@ namespace ReTicket.Infrastructure
             _context = context;
             _dbSet = context.Set<T>();
         }
-        public IQueryable<T> GetQuery() 
+        public IQueryable<T> GetQuery()
         {
             return _dbSet;
         }
         public async Task BaseAddAsync(T entity, CancellationToken token)
         {
-             await _dbSet.AddAsync(entity, token);
+            await _dbSet.AddAsync(entity, token);
             _ = await _context.SaveChangesAsync(token);
         }
         public async Task<T?> BaseGetAsync(CancellationToken token, params object[] key)

@@ -4,7 +4,7 @@ using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
 using System.Threading;
 
-namespace ReTicket.Infrastructure.Repositories
+namespace ReTicket.Persistence.Repositories
 {
     public class TicketRepository : BaseRepository<Ticket>, ITicketRepository
     {
@@ -25,7 +25,7 @@ namespace ReTicket.Infrastructure.Repositories
 
         public Task<Ticket?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return BaseGetAsync(cancellationToken,id);
+            return BaseGetAsync(cancellationToken, id);
         }
 
         public async Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken)

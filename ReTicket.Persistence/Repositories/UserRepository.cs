@@ -2,7 +2,7 @@
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
 
-namespace ReTicket.Infrastructure.Repositories
+namespace ReTicket.Persistence.Repositories
 {
     public class UserRepository : BaseRepository<AppUser>, IUserRepository
     {
