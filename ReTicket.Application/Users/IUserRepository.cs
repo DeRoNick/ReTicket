@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReTicket.Domain.Models;
 
 namespace ReTicket.Application.Users
 {
     public interface IUserRepository
     {
+        Task<AppUser?> GetByIdAsync(string id, CancellationToken cancellationToken);
     }
 }
