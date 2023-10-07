@@ -1,17 +1,11 @@
-﻿using ReTicket.Persistence.Database;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using ReTicket.Persistence.Database;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ReTicket.Infrastructure
+namespace ReTicket.Persistence.Repositories
 {
     public abstract class BaseRepository<T> where T : class
     {
-        #region Protected
         protected ReTicketDbContext _context;
         protected DbSet<T> _dbSet;
         protected IQueryable<T> Table => _dbSet;
@@ -19,23 +13,21 @@ namespace ReTicket.Infrastructure
         {
             return _dbSet.Where(expression);
         }
-        #endregion
-
-        #region ctor
-        public BaseRepository(ReTicketDbContext context)
+        protected BaseRepository(ReTicketDbContext context)
         {
             _context = context;
-            //_dbSet = //TODO context.Set<T>();
+            _dbSet = context.Set<T>();
         }
-        #endregion
-
-        #region Methods
+        public IQueryable<T> GetQuery()
+        {
+            return _dbSet;
+        }
         public async Task BaseAddAsync(T entity, CancellationToken token)
         {
-            //TODO await _dbSet.AddAsync(entity, token);
-            await _context.SaveChangesAsync(token);
+            await _dbSet.AddAsync(entity, token);
+            _ = await _context.SaveChangesAsync(token);
         }
-        public async Task<T> BaseGetAsync(CancellationToken token, params object[] key)
+        public async Task<T?> BaseGetAsync(CancellationToken token, params object[] key)
         {
             return await _dbSet.FindAsync(key, token);
         }
@@ -51,15 +43,14 @@ namespace ReTicket.Infrastructure
         {
             if (entity == null)
                 return;
-            //TODO _dbSet.Update(entity);
-            await _context.SaveChangesAsync(token);
+            _dbSet.Update(entity);
+            _ = await _context.SaveChangesAsync(token);
         }
         public async Task BaseDeleteAsync(T result, CancellationToken token)
         {
-            _dbSet.Remove(result);
+            _ = _dbSet.Remove(result);
 
-            await _context.SaveChangesAsync(token);
+            _ = await _context.SaveChangesAsync(token);
         }
-        #endregion
     }
 }

@@ -12,7 +12,7 @@ public class ReTicketDbContext : IdentityDbContext
     public DbSet<Event> Events { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
     public DbSet<TicketListing> TicketListings { get; set; }
-    public DbSet<AppUser> Users { get; set; }
+    //public DbSet<AppUser> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

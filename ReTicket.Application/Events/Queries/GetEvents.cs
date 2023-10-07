@@ -5,17 +5,12 @@ using ReTicket.Domain.Models;
 
 namespace ReTicket.Application.Events.Queries
 {
-    public static class GetEvent
+    public static class GetEvents
     {
-        public class Command : IRequest<Event?>
+        public class Command : IRequest<List<Event>>
         {
-            public int Id { get; }
-            public Command(int id)
-            {
-                Id = id;
-            }
         }
-        internal sealed class Handler : IRequestHandler<Command, Event?>
+        internal sealed class Handler : IRequestHandler<Command, List<Event>>
         {
             private readonly IEventRepository _eventRepo;
 
@@ -23,16 +18,15 @@ namespace ReTicket.Application.Events.Queries
             {
                 _eventRepo = eventRepo;
             }
-            public async Task<Event?> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<List<Event>> Handle(Command request, CancellationToken cancellationToken)
             {
-                return await _eventRepo.GetByIdAsync(request.Id, cancellationToken);
+                return await _eventRepo.GetAllAsync(cancellationToken);
             }
         }
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                _ = RuleFor(x => x.Id).NotEmpty();
             }
         }
     }

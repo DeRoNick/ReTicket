@@ -7,6 +7,8 @@ public class TicketListing
     public int TicketId { get; set; }
     public Ticket Ticket { get; set; }
 
+    public int EventId { get; set; }
+    public Event Event { get; set; }
 
 
     public string UserId { get; set; }
