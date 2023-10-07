@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
+using ReTicket.Application.Abstractions;
+using ReTicket.Domain.Models;
 
 namespace ReTicket.Application.Auth.Commands
 {
@@ -17,14 +19,14 @@ namespace ReTicket.Application.Auth.Commands
         }
         internal sealed class Handler : IRequestHandler<Command, int>
         {
-            private readonly object _authService;
-            public Handler(object authService)
+            private readonly IRepository<AppUser> _userRepo;
+            public Handler(IRepository<AppUser> userRepo)
             {
-                _authService = authService;
+                _userRepo = userRepo;
             }
             public async Task<int> Handle(Command request, CancellationToken cancellationToken)
             {
-                //
+               // var user = await _userRepo.Get()
 
                 return 1;
             }

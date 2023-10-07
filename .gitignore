@@ -21,3 +21,5 @@ riderModule.iml
 *.lock
 *.testlog
 *.manifest
+*.2
+/.vs/ReTicket/v17/HierarchyCache.v1.txt
