@@ -8,6 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="EntityFramework" Version="6.4.4" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\ReTicket.Application\ReTicket.Application.csproj" />
       <ProjectReference Include="..\ReTicket.Infrastructure\ReTicket.Infrastructure.csproj" />
       <ProjectReference Include="..\ReTicket.Persistence\ReTicket.Persistence.csproj" />

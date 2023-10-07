@@ -15,9 +15,11 @@ public static class DependencyInjection
         {
             options.UseSqlServer(configuration.GetConnectionString("Database"));
         });
-        services.AddScoped<IRepository<Ticket>>();
-        services.AddScoped<IRepository<Event>>();
-        services.AddScoped<IRepository<TicketListing>>();
+        services.AddScoped<DbContext, ReTicketDbContext>();
+
+        //services.AddScoped<IRepository<Ticket>>();
+        //services.AddScoped<IRepository<Event>>();
+        //services.AddScoped<IRepository<TicketListing>>();
         return services;
     }
 }

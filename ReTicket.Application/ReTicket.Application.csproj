@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="EntityFramework" Version="6.4.4" />
       <PackageReference Include="FluentValidation" Version="11.7.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
       <PackageReference Include="MediatR" Version="12.1.1" />
@@ -16,6 +17,20 @@
       <PackageReference Include="MediatR" Version="12.1.1" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ReTicket.Domain\ReTicket.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Events\Commands\" />
+      <Folder Include="TicketListings\Commands\" />
+      <Folder Include="TicketListings\Queries\" />
+      <Folder Include="Tickets\Commands\" />
+      <Folder Include="Tickets\Queries\" />
+      <Folder Include="Users\Commands\" />
+      <Folder Include="Users\Queries\" />
     </ItemGroup>
 
 </Project>
