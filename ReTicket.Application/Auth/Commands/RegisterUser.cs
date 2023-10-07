@@ -29,6 +29,8 @@ namespace ReTicket.Application.Auth.Commands
             public async Task<int> Handle(Command request, CancellationToken cancellationToken)
             {
                 //
+                //user.Password = CustomHasher.GenerateHash(user.Password);
+
 
                 return 1;
             }
