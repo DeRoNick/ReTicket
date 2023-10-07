@@ -9,45 +9,25 @@ namespace ReTicket.Infrastructure.Repositories
     {
         public TicketListingRepository(ReTicketDbContext context) : base(context) { }
 
-        public async Task<int> CreateAsync(TicketListing author, CancellationToken cancellationToken)
-        {
-            await base.BaseAddAsync(author, cancellationToken);
-            return author.Id;
-        }
-
-        public async Task DeleteAsync(int id, CancellationToken cancellationToken)
-        {
-            var result = await GetByIdAsync(id, cancellationToken);
-
-            if (result != null)
-            {
-                await BaseDeleteAsync(result, cancellationToken);
-            }
-        }
-
-        public Task GenerateNewGuidAsync(TicketListing ticket, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<List<TicketListing>> GetAllForEventAsync(int eventId, CancellationToken cancellationToken)
         {
             return await GetQuery().Where(x => x.EventId == eventId).ToListAsync(cancellationToken);
         }
 
-        public Task<TicketListing?> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<TicketListing?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return BaseGetAsync(cancellationToken, id);
+            return await BaseGetAsync(cancellationToken, id);
         }
 
-        public Task<int> InsertAsync(TicketListing ticket, CancellationToken cancellationToken)
+        public async Task<int> InsertAsync(TicketListing ticket, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await BaseAddAsync(ticket, cancellationToken);
+            return ticket.Id;
         }
 
-        public Task UpdateAsync(TicketListing ticket, CancellationToken cancellationToken)
+        public async Task UpdateAsync(TicketListing ticket, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await BaseUpdateAsync(ticket, cancellationToken);
         }
     }
 }

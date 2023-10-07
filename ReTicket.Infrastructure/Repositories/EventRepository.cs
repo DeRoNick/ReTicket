@@ -1,23 +1,14 @@
 ﻿using ReTicket.Application.Events;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReTicket.Infrastructure.Repositories
 {
     public class EventRepository : BaseRepository<Event>, IEventRepository
     {
-        private readonly DbContext _dbContext;
-        private readonly BaseRepository<Event> _baseRepository;
 
-        public EventRepository(DbContext dbContext, BaseRepository<Event> baseRepository)
+        public EventRepository(ReTicketDbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
-            _baseRepository = baseRepository;
         }
 
         public async Task<int> CreateAsync(Event @event, CancellationToken cancellationToken)
