@@ -1,6 +1,6 @@
 ﻿using ReTicket.Domain.Models;
 
-namespace ReTicket.Application.Users
+namespace ReTicket.Application.Abstractions
 {
     public interface IUserRepository
     {

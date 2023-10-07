@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReTicket.Application.Tickets;
+using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
+using System.Threading;
 
 namespace ReTicket.Infrastructure.Repositories
 {
@@ -22,14 +23,14 @@ namespace ReTicket.Infrastructure.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
-        public Task<Ticket> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public Task<Ticket?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return GetByIdAsync(id, cancellationToken);
+            return BaseGetAsync(cancellationToken,id);
         }
 
         public async Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken)
         {
-            await UpdateAsync(ticket, cancellationToken);
+            await BaseUpdateAsync(ticket, cancellationToken);
         }
     }
 }

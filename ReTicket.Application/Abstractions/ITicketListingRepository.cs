@@ -1,6 +1,6 @@
 ﻿using ReTicket.Domain.Models;
 
-namespace ReTicket.Application.TicketListings
+namespace ReTicket.Application.Abstractions
 {
     public interface ITicketListingRepository
     {

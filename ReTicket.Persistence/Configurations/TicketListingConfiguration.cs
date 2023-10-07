@@ -20,6 +20,10 @@ namespace ReTicket.Persistence.Configurations
                 .WithMany(g => g.ListedTickets)
                 .HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.NoAction);
 
+            _ = builder.HasOne<Event>(s => s.Event)
+                .WithMany(g => g.TicketListings)
+                .HasForeignKey(s => s.EventId).OnDelete(DeleteBehavior.NoAction);
+
             _ = builder.Property(x => x.Price).HasColumnType("Money");
         }
     }

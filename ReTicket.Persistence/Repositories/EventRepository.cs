@@ -1,4 +1,4 @@
-﻿using ReTicket.Application.Events;
+﻿using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
 
@@ -13,29 +13,29 @@ namespace ReTicket.Infrastructure.Repositories
 
         public async Task<int> CreateAsync(Event @event, CancellationToken cancellationToken)
         {
-            await base.BaseAddAsync(@event, cancellationToken);
+            await BaseAddAsync(@event, cancellationToken);
             return @event.Id;
         }
 
         public async Task DeleteAsync(int id, CancellationToken cancellationToken)
         {
-            var @event = await base.BaseGetAsync(cancellationToken, id);
-            await base.BaseDeleteAsync(@event, cancellationToken);
+            var @event = await BaseGetAsync(cancellationToken, id);
+            await BaseDeleteAsync(@event!, cancellationToken);
         }
 
         public async Task<List<Event>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await base.BaseGetAllAsync(cancellationToken);
+            return await BaseGetAllAsync(cancellationToken);
         }
 
         public async Task<Event?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await base.BaseGetAsync(cancellationToken, id);
+            return await BaseGetAsync(cancellationToken, id);
         }
 
         public async Task UpdateAsync(Event @event, CancellationToken cancellationToken)
         {
-            await base.BaseUpdateAsync(@event, cancellationToken);
+            await BaseUpdateAsync(@event, cancellationToken);
         }
     }
 

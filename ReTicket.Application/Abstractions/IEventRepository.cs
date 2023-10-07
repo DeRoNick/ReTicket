@@ -1,6 +1,6 @@
 ﻿using ReTicket.Domain.Models;
 
-namespace ReTicket.Application.Events
+namespace ReTicket.Application.Abstractions
 {
     public interface IEventRepository
     {
