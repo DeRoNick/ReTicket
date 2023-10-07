@@ -1,11 +1,6 @@
 ﻿using ReTicket.Application.TicketListings;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReTicket.Infrastructure.Repositories
 {
@@ -19,14 +14,14 @@ namespace ReTicket.Infrastructure.Repositories
             return author.Id;
         }
 
-        public async Task DeleteAsync(string name, CancellationToken cancellationToken)
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken)
         {
-            //var result = await GetAsync(name, cancellationToken);
+            var result = await GetByIdAsync(id, cancellationToken);
 
-            //if (result != null)
-            //{
-            //    await BaseDeleteAsync(result, cancellationToken);
-            //}
+            if (result != null)
+            {
+                await BaseDeleteAsync(result, cancellationToken);
+            }
         }
 
         public Task GenerateNewGuidAsync(TicketListing ticket, CancellationToken cancellationToken)
@@ -34,12 +29,17 @@ namespace ReTicket.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<TicketListing>> GetAllForEventAsync(string eventTitle, CancellationToken cancellationToken)
+        public Task<List<TicketListing>> GetAllForEventAsync(int eventId, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
         public Task<TicketListing> GetByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> InsertAsync(TicketListing ticket, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

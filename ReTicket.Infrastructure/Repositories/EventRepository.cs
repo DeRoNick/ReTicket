@@ -1,8 +1,4 @@
-﻿using ReTicket.Application.Events;
-using ReTicket.Application.Tickets;
-using ReTicket.Domain.Models;
-using ReTicket.Persistence.Database;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,40 +6,42 @@ using System.Threading.Tasks;
 
 namespace ReTicket.Infrastructure.Repositories
 {
-    public class EventRepository : BaseRepository<Event>, IEventRepository
+    public class EventRepository : IEventRepository
     {
-        public EventRepository(ReTicketDbContext context) : base(context)
+        private readonly DbContext _dbContext;
+        private readonly BaseRepository<Event> _baseRepository;
+
+        public EventRepository(DbContext dbContext, BaseRepository<Event> baseRepository)
         {
+            _dbContext = dbContext;
+            _baseRepository = baseRepository;
         }
 
-        public Task<int> CreateAsync(Event book, CancellationToken cancellationToken)
+        public async Task<int> CreateAsync(Event @event, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _baseRepository.BaseAddAsync(@event, cancellationToken);
+            return @event.Id;
         }
 
-        public Task DeleteAsync(int id, CancellationToken cancellationToken)
+        public async Task DeleteAsync(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var @event = await _baseRepository.BaseGetAsync(cancellationToken, id);
+            await _baseRepository.BaseDeleteAsync(@event, cancellationToken);
         }
 
-        public Task<List<Event>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<List<Event>> GetAllAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _baseRepository.BaseGetAllAsync(cancellationToken);
         }
 
-        public Task<Event> GetAsync(string title, CancellationToken cancellationToken)
+        public async Task<Event?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _baseRepository.BaseGetAsync(cancellationToken, id);
         }
 
-        public Task<Event> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task UpdateAsync(Event @event, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task UpdateAsync(Event book, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            await _baseRepository.BaseUpdateAsync(@event, cancellationToken);
         }
     }
 
