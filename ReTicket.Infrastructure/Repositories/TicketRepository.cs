@@ -1,11 +1,7 @@
-﻿using ReTicket.Application.Tickets;
+﻿using Microsoft.EntityFrameworkCore;
+using ReTicket.Application.Tickets;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReTicket.Infrastructure.Repositories
 {
@@ -20,19 +16,20 @@ namespace ReTicket.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<Ticket>> GetAllForEventAsync(string eventTitle, CancellationToken cancellationToken)
+        public async Task<List<Ticket>> GetAllForEvent(int eventId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var query = GetQuery().Where(x => x.EventId == eventId);
+            return await query.ToListAsync(cancellationToken);
         }
 
         public Task<Ticket> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return GetByIdAsync(id, cancellationToken);
         }
 
-        public Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken)
+        public async Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await UpdateAsync(ticket, cancellationToken);
         }
     }
 }
