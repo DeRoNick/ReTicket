@@ -23,11 +23,30 @@ namespace ReTicket.Infrastructure.Repositories
         {
             //var result = await GetAsync(name, cancellationToken);
 
-            if (result != null)
-            {
-                await BaseDeleteAsync(result, cancellationToken);
-            }
+            //if (result != null)
+            //{
+            //    await BaseDeleteAsync(result, cancellationToken);
+            //}
         }
 
+        public Task GenerateNewGuidAsync(TicketListing ticket, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<TicketListing>> GetAllForEventAsync(string eventTitle, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TicketListing> GetByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(TicketListing ticket, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
