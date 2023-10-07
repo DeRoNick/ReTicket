@@ -18,3 +18,6 @@ riderModule.iml
 /.vs/ReTicket/FileContentIndex/merges/01439ffb-d92b-4775-8c9f-b6d2ed6b6de3.vsidx
 /.vs/ReTicket/FileContentIndex/e90a991a-c6a4-42fb-9571-984ac52a8d31.vsidx
 *.vsidx
+*.lock
+*.testlog
+*.manifest
