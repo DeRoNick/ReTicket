@@ -38,13 +38,13 @@ namespace ReTicket.Application.TicketListings.Commands
                 var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
                 if (user == null) 
                 {
-                    throw new Exceptions.ApplicationException("User with that Id does not exist.");
+                    throw new Infrastructure.Exceptions.ApplicationException("User with that Id does not exist.");
                 }
 
                 var ticket = await _ticketRepository.GetByIdAsync(request.TicketId, cancellationToken);
                 if (ticket == null)
                 {
-                    throw new Exceptions.ApplicationException("Ticket with that Id does not exist.");
+                    throw new Infrastructure.Exceptions.ApplicationException("Ticket with that Id does not exist.");
                 }
 
                 var listing = new TicketListing() { Price = request.Price, TicketId = request.TicketId, UserId = request.UserId};
