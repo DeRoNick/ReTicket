@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReTicket.Application.Events;
+using ReTicket.Application.TicketListings;
+using ReTicket.Application.Tickets;
+using ReTicket.Infrastructure.Repositories;
 using ReTicket.Persistence.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +16,12 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ReTicketDbContext>();
+
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<ITicketListingRepository, TicketListingRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
