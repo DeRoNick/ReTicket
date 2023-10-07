@@ -33,16 +33,20 @@ namespace ReTicket.Application.Auth.Commands
                 return 1;
             }
         }
-        public class CommandValidator : AbstractValidator<RegisterUser.Command>
+        public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Your email is not in valid format.");
-                RuleFor(x => x.FirstName).MinimumLength(2).WithMessage("Your first name length must be at least 2.")
+                RuleFor(x => x.Email)
+                    .NotEmpty().EmailAddress().WithMessage("Your email is not in valid format.");
+                RuleFor(x => x.FirstName)
+                    .MinimumLength(2).WithMessage("Your first name length must be at least 2.")
                     .MaximumLength(20).WithMessage("Your first name length must not exceed 20.");
-                RuleFor(x => x.LastName).MinimumLength(2).WithMessage("Your last name length must be at least 2.")
+                RuleFor(x => x.LastName)
+                    .MinimumLength(2).WithMessage("Your last name length must be at least 2.")
                     .MaximumLength(20).WithMessage("Your last name length must not exceed 20.");
-                RuleFor(p => p.Password).NotEmpty().WithMessage("Your password cannot be empty")
+                RuleFor(p => p.Password)
+                    .NotEmpty().WithMessage("Your password cannot be empty")
                     .MinimumLength(8).WithMessage("Your password length must be at least 8.")
                     .MaximumLength(16).WithMessage("Your password length must not exceed 16.")
                     .Matches(@"[A-Z]+").WithMessage("Your password must contain at least one uppercase letter.")
