@@ -29,7 +29,7 @@ namespace ReTicket.Application.Auth.Commands
                 return 1;
             }
         }
-        public class CommandValidator : AbstractValidator<RegisterUser.Command>
+        public class CommandValidator : AbstractValidator<LoginUser.Command>
         {
             public CommandValidator()
             {
