@@ -18,6 +18,10 @@ namespace ReTicket.Infrastructure
             _context = context;
             _dbSet = context.Set<T>();
         }
+        public IQueryable<T> GetQuery() 
+        {
+            return _dbSet;
+        }
         public async Task BaseAddAsync(T entity, CancellationToken token)
         {
              await _dbSet.AddAsync(entity, token);

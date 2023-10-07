@@ -8,5 +8,6 @@ public class Event
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string Location { get; set; }
+    public ICollection<TicketListing> TicketListings { get; set; }
     public ICollection<Ticket> Tickets { get; set; }
 }
