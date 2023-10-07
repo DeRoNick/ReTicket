@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
 using System.Linq.Expressions;

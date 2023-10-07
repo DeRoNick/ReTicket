@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
 
@@ -15,9 +14,7 @@ public static class DependencyInjection
         {
             options.UseSqlServer(configuration.GetConnectionString("Database"));
         });
-        services.AddScoped<IRepository<Ticket>>();
-        services.AddScoped<IRepository<Event>>();
-        services.AddScoped<IRepository<TicketListing>>();
+
         return services;
     }
 }
