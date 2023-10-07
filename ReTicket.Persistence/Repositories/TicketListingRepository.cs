@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReTicket.Application.TicketListings;
+using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
 
-namespace ReTicket.Infrastructure.Repositories
+namespace ReTicket.Persistence.Repositories
 {
     public class TicketListingRepository : BaseRepository<TicketListing>, ITicketListingRepository
     {

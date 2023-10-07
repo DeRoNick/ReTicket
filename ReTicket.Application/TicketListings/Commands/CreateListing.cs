@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using ReTicket.Application.Tickets;
-using ReTicket.Application.Users;
+using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 
 namespace ReTicket.Application.TicketListings.Commands
@@ -41,12 +40,15 @@ namespace ReTicket.Application.TicketListings.Commands
                 {
                     throw new Exceptions.ApplicationException("User with that Id does not exist.");
                 }
+
                 var ticket = await _ticketRepository.GetByIdAsync(request.TicketId, cancellationToken);
                 if (ticket == null)
                 {
                     throw new Exceptions.ApplicationException("Ticket with that Id does not exist.");
                 }
+
                 var listing = new TicketListing() { Price = request.Price, TicketId = request.TicketId, UserId = request.UserId};
+
                 return await _listingRepository.InsertAsync(listing, cancellationToken);
             }
         }

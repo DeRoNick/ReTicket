@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 
 namespace ReTicket.Application.Events.Queries

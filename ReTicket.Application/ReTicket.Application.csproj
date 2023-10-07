@@ -21,4 +21,8 @@
       <ProjectReference Include="..\ReTicket.Domain\ReTicket.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Tickets\" />
+    </ItemGroup>
+
 </Project>

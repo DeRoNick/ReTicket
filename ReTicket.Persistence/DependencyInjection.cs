@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ReTicket.Domain.Models;
+using ReTicket.Application.Abstractions;
 using ReTicket.Persistence.Database;
+using ReTicket.Persistence.Repositories;
 
 namespace ReTicket.Persistence;
 
@@ -10,10 +11,15 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ReTicketDbContext>(options =>
+        _ = services.AddDbContext<ReTicketDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("Database"));
+            _ = options.UseSqlServer(configuration.GetConnectionString("Database"));
         });
+
+        _ = services.AddScoped<ITicketRepository, TicketRepository>();
+        _ = services.AddScoped<ITicketListingRepository, TicketListingRepository>();
+        _ = services.AddScoped<IEventRepository, EventRepository>();
+        _ = services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
