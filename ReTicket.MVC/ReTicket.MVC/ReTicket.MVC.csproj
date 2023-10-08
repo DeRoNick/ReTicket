@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\ReTicket.Persistence\ReTicket.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="Views\Events\Create.cshtml" />
+  </ItemGroup>
+
 </Project>
