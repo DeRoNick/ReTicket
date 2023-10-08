@@ -1,4 +1,4 @@
-﻿@model ReTicket.Domain.Models.TicketListing
+﻿@model ReTicket.Application.TicketListings.Commands.CreateListing.Command
 
 @{
     ViewData["Title"] = "Create";
@@ -16,18 +16,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="TicketId" class="control-label">Ticket</label>
+                <label asp-for="TicketId" class="control-label">Ticket Id</label>
                 <select asp-for="TicketId" class="form-control" asp-items="ViewBag.TicketId"></select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="EventId" class="control-label">Event</label>
-                <select asp-for="EventId" class="form-control" asp-items="ViewBag.EventId"></select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label">User</label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
             </div>
 
             <div class="form-group">

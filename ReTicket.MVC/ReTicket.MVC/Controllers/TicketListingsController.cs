@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReTicket.Application.TicketListings.Commands;
+using ReTicket.Application.TicketListings.Queries;
 using ReTicket.Domain.Models;
 
 namespace ReTicket.MVC.Controllers
@@ -13,9 +17,11 @@ namespace ReTicket.MVC.Controllers
     public class TicketListingsController : Controller
     {
         private readonly IMediator _mediator;
-        public TicketListingsController(IMediator mediator)
+        private readonly SignInManager<IdentityUser> _signInManager;
+        public TicketListingsController(IMediator mediator, SignInManager<IdentityUser> signInManager)
         {
             _mediator = mediator;
+            _signInManager = signInManager;
         }
 
         //// GET: TicketListings
@@ -56,14 +62,21 @@ namespace ReTicket.MVC.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
 
-        public async Task<IActionResult> Create(TicketListing ticketListing)
+        public async Task<IActionResult> Create(CreateListing.Command ticketListing)
         {
-            if (ModelState.IsValid)
-            {
-                await _mediator.Send(ticketListing);
-            }
+            if (!_signInManager.IsSignedIn(User) || !ModelState.IsValid) return View();
+            var command = new CreateListing.Command(ticketListing.TicketId, ticketListing.Price,
+                User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return RedirectToAction("GetListing", await _mediator.Send(command));
+        }
 
-            return View(ticketListing);
+        public async Task<IActionResult> Details(int listingId)
+        {
+            var command = new GetListingById.Query
+            {
+                Id = listingId
+            };
+            return View(await _mediator.Send(command));
         }
 
         //// GET: TicketListings/Edit/5

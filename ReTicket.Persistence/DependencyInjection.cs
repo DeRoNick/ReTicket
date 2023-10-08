@@ -20,6 +20,7 @@ public static class DependencyInjection
         _ = services.AddScoped<ITicketListingRepository, TicketListingRepository>();
         _ = services.AddScoped<IEventRepository, EventRepository>();
         _ = services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITransactionProvider, TransactionProvider>();
 
         return services;
     }

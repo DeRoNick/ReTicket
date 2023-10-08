@@ -17,9 +17,9 @@ namespace ReTicket.Application.TicketListings.Commands
                 UserId = userId;
             }
 
-            internal int TicketId { get; }
-            internal decimal Price { get; }
-            internal string UserId { get; }
+            public int TicketId { get; }
+            public decimal Price { get; }
+            public string UserId { get; }
 
         }
         internal sealed class Handler : IRequestHandler<Command, int>
