@@ -13,11 +13,11 @@ namespace ReTicket.MVC.Helper
             _qr = new QRCodeGenerator();
         }
 
-        public static string Generate(Guid key)
+        public static string Generate(Guid key, int qrCodeSize)
         {
             var qrData = _qr.CreateQrCode(key.ToString(), QRCodeGenerator.ECCLevel.Q);
             var qrCode = new QRCode(qrData);
-            var qrCodeImage = qrCode.GetGraphic(2);
+            var qrCodeImage = qrCode.GetGraphic(qrCodeSize);
             string base64QrCode;
 
             using (MemoryStream memoryStream = new MemoryStream())

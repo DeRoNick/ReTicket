@@ -45,10 +45,35 @@ namespace ReTicket.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Buy(int ticketListingId, string userId)
         {
-            var listing = await _mediator.Send(new GetListingById.Query() { Id = ticketListingId });
-            return RedirectToAction("CheckOut", controllerName: "CheckOut", new { price = listing.Price, eventName = listing.EventName, ticketCode = listing.TicketCode });
-            await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
-            return View();
+            var listing = await _mediator.Send(new GetListingById.Query(ticketListingId));
+            var domain = "https://localhost:7067/";
+            var options = new SessionCreateOptions
+            {
+                SuccessUrl = domain + $"CheckOut/OrderConfirmation?ticketListingId={ticketListingId}",
+                CancelUrl = domain + $"CheckOut/Login",
+                LineItems = new List<SessionLineItemOptions>()
+                {
+                    new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmountDecimal= listing.Price*100,
+                            Currency = "GEL",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = listing.Event.Name + " " + listing.Ticket.Code,
+                            },
+
+                        },
+                        Quantity = 1
+                    }
+                },
+                Mode = "payment",
+            };
+            var service = new SessionService();
+            Session session = service.Create(options);
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
         }
 
         // GET: TicketListings/Create

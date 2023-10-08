@@ -41,7 +41,7 @@ namespace ReTicket.MVC.Controllers
             {
                 var eventModel = await _mediator.Send(new GetEvent.Query(ticket.EventId));
 
-                var base64QrCode = QRBase64Helper.Generate(ticket.Code);
+                var base64QrCode = QRBase64Helper.Generate(key: ticket.Code, qrCodeSize: 2);
 
                 var ticketViewModel = new TicketViewModel 
                 { 
