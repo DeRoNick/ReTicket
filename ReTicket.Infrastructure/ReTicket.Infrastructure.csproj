@@ -12,6 +12,7 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
       <PackageReference Include="RestEase" Version="1.6.4" />
       <PackageReference Include="RestEase.HttpClientFactory" Version="1.6.4" />
+      <PackageReference Include="Stripe.net" Version="42.8.0" />
     </ItemGroup>
 
     <ItemGroup>

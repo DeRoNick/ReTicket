@@ -22,7 +22,7 @@ namespace ReTicket.Application.TicketListings.Commands
             public string UserId { get; }
 
         }
-        internal sealed class Handler : IRequestHandler<Command, int>
+        public sealed class Handler : IRequestHandler<Command, int>
         {
             private readonly ITicketListingRepository _listingRepository;
             private readonly IUserRepository _userRepository;
@@ -69,6 +69,7 @@ namespace ReTicket.Application.TicketListings.Commands
             public CommandValidator()
             {
                 _ = RuleFor(x => x.TicketId).GreaterThan(0);
+                _ = RuleFor(x => x.Price).GreaterThan(0);
                 _ = RuleFor(x => x.UserId).NotEmpty();
 
             }

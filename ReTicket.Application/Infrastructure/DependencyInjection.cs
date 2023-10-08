@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services,IConfiguration configuration)
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly));
+        services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
         _ = services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipe<,>));
 
         var priceRuleOptions = new PriceRuleOptions();

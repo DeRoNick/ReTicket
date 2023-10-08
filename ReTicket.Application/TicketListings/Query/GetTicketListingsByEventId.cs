@@ -20,7 +20,7 @@ namespace ReTicket.Application.TicketListings.Query
                 EventId = eventId;
             }
         }
-        internal sealed class Handler : IRequestHandler<Query, List<TicketListing?>>
+        public sealed class Handler : IRequestHandler<Query, List<TicketListing?>>
         {
             private readonly ITicketListingRepository _ticketListingRepo;
 
@@ -37,7 +37,8 @@ namespace ReTicket.Application.TicketListings.Query
         {
             public QueryValidator()
             {
-                _ = RuleFor(x => x.EventId).NotEmpty();
+                _ = RuleFor(x => x.EventId)
+                    .Must(x => x > 0).WithMessage("EventId must be greater than 0.");
             }
         }
     }

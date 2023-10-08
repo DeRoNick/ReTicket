@@ -15,11 +15,11 @@ namespace ReTicket.Application.TicketListings.Commands
                 UserId = userId;
                 ListingId = listingId;
             }
-            internal int ListingId { get; }
-            internal string UserId { get; }
+            public int ListingId { get; }
+            public string UserId { get; }
 
         }
-        internal sealed class Handler : IRequestHandler<Command>
+        public sealed class Handler : IRequestHandler<Command>
         {
             private readonly ITicketListingRepository _listingRepository;
             private readonly IUserRepository _userRepository;

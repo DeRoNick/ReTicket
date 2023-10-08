@@ -20,7 +20,7 @@ namespace ReTicket.Application.Tickets.Query
                 EventId = eventId;
             }
         }
-        internal sealed class Handler : IRequestHandler<Query, List<Ticket?>>
+        public sealed class Handler : IRequestHandler<Query, List<Ticket?>>
         {
             private readonly ITicketRepository _ticketRepo;
 
