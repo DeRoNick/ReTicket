@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReTicket.Application.TicketListings.Commands;
 using ReTicket.Application.TicketListings.Queries;
 using ReTicket.Application.TicketListings.Query;
+using ReTicket.Domain.Models;
 
 namespace ReTicket.MVC.Controllers
 {
@@ -68,7 +69,7 @@ namespace ReTicket.MVC.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
 
-        public async Task<IActionResult> Create(CreateListing.Command ticketListing)
+        public async Task<IActionResult> Create(TicketListing ticketListing)
         {
             if (!_signInManager.IsSignedIn(User) || !ModelState.IsValid) return View();
             var command = new CreateListing.Command(ticketListing.TicketId, ticketListing.Price,

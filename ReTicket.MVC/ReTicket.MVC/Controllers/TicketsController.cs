@@ -25,7 +25,7 @@ namespace ReTicket.MVC.Controllers
             return View(await _mediator.Send(new GetTicketsByEventId.Query(eventId)));
         }
 
-        public async Task<IActionResult> Index(string userId)
+        public async Task<IActionResult> IndexForUser(string userId)
         {
             return View(await _mediator.Send(new GetTicketsByUser.Query(userId)));
         }

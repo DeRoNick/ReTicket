@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,16 +31,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <input type="button" value="ReSell owned Ticket" onclick="location.href='@Url.Action("Index", "Tickets")'" class="btn btn-danger" />
+                            <input type="button" value="Events" onclick="location.href='@Url.Action("Index", "Events")'" class="btn btn-primary" />
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                            <input type="button" value="ReSell owned Ticket" onclick="location.href='@Url.Action("IndexForUser", "Tickets", new { userId = userId })'" class="btn btn-danger" />
                         </li>
-@*                         <a asp-controller="TicketListings" asp-action="Create" class="btn btn-sm btn-primary">resell bro</a>
-                        <a class="nav-link text-dark" href="/TicketListings/Create">ReSell owned ticket</a>
-                        <form method="get" asp-controller="TicketListings" asp-action="Create">
-                            <button type="submit">Call Controller Method</button>
-                        </form> *@
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

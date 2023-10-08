@@ -5,7 +5,7 @@
     Layout = "_Layout";
 }
 
-<h1>Available Tickets for the event</h1>
+<h1>Your currently owned tickets:</h1>
 
 <table class="table">
     <thead>
@@ -39,6 +39,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Id)
+            </td>
+            <td>
+                <input type="button" value="Events" onclick="location.href='@Url.Action("Create", "TicketListings")'" class="btn btn-primary" />
             </td>
         </tr>
 }
