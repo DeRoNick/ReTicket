@@ -1,4 +1,5 @@
 using FluentValidation;
+using FluentValidation.TestHelper;
 using Moq;
 using ReTicket.Application.Abstractions;
 using ReTicket.Application.Events.Queries;
@@ -40,24 +41,11 @@ public class GetEventQueryTests
     [Fact]
     public async Task GetEventQueryHandler_WhenIdNotPositive_ShouldThrowExceptionWithErrorMessage()
     {
-        var id = 1;
-        var command = new GetEvent.Command(id);
+        var command = new GetEvent.Command(-1);
+        var validator = new GetEvent.CommandValidator();
 
-        var mock = new Mock<IEventRepository>();
-        var domainEvent = new Event
-        {
-            Name = "name",
-            Location = "tbilisi",
-            StartDate = DateTime.MinValue,
-            EndDate = DateTime.MaxValue,
-        };
-        mock.Setup(x => x.GetByIdAsync(It.Is<int>(x => x == id), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(domainEvent);
+        var result = validator.TestValidate(command);
 
-        var handler = new GetEvent.Handler(mock.Object);
-
-        var result = async () => await handler.Handle(new GetEvent.Command(-1), CancellationToken.None);
-
-        Assert.ThrowsAny<ValidationException>(result);
+        result.ShouldHaveValidationErrorFor(x => x.Id);
     }
 }

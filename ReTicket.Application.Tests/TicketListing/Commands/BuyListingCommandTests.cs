@@ -1,4 +1,6 @@
 using FluentValidation;
+using FluentValidation.TestHelper;
+using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
 using ReTicket.Application.Abstractions;
 using ReTicket.Application.Rules;
@@ -35,6 +37,11 @@ public class BuyListingCommandTests
             .ReturnsAsync(ticket);
 
         var transactionProviderMock = new Mock<ITransactionProvider>();
+
+        var transactionMock = new Mock<IDbContextTransaction>();
+        
+        transactionProviderMock.Setup(x => x.CreateTransactionScope(It.IsAny<CancellationToken>()))
+            .ReturnsAsync(transactionMock.Object);
 
         var userRepoMock = new Mock<IUserRepository>();
         var user = new Domain.Models.AppUser
@@ -140,24 +147,12 @@ public class BuyListingCommandTests
     [Fact]
     public async Task BuyListing_WhenCommandIsIncorrect_ShouldThrowException()
     {
-        var command = new BuyListing.Command(0, "1");
+        var command = new BuyListing.Command(-1, "");
+        var validator = new BuyListing.CommandValidator();
         
-        var ticketListingRepoMock = new Mock<ITicketListingRepository>();
+        var result = validator.TestValidate(command);
         
-        var ticketRepoMock = new Mock<ITicketRepository>();
-
-        var transactionProviderMock = new Mock<ITransactionProvider>();
-
-        var userRepoMock = new Mock<IUserRepository>();
-        
-        var handler = new BuyListing.Handler(ticketListingRepoMock.Object, ticketRepoMock.Object, userRepoMock.Object, new PriceRuleOptions
-        {
-            MarginCommissionPercentage = 2,
-            MaximumMarginPercentage = 5
-        }, transactionProviderMock.Object);
-        await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(command, CancellationToken.None));
-        
-        command = new BuyListing.Command(1, null);
-        await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(command, CancellationToken.None));
+        result.ShouldHaveValidationErrorFor(x => x.ListingId);
+        result.ShouldHaveValidationErrorFor(x => x.UserId);
     }
 }

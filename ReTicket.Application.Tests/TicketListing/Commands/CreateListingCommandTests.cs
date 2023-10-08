@@ -1,10 +1,12 @@
 using FluentValidation;
+using FluentValidation.TestHelper;
 using Microsoft.Extensions.Options;
 using Moq;
 using ReTicket.Application.Abstractions;
 using ReTicket.Application.Rules;
 using ReTicket.Application.TicketListings.Commands;
 using ReTicket.Domain.Models;
+using ApplicationException = ReTicket.Application.Infrastructure.Exceptions.ApplicationException;
 
 namespace ReTicket.Application.Tests.TicketListing.Commands;
 
@@ -88,7 +90,7 @@ public class CreateListingCommandTests
         
         var handler = new CreateListing.Handler(listingRepoMock.Object, ticketRepoMock.Object, userRepoMock.Object, ruleOptions);
         
-        await Assert.ThrowsAsync<ApplicationException>(() => handler.Handle(command, CancellationToken.None));
+        await Assert.ThrowsAsync<Infrastructure.Exceptions.ApplicationException>(() => handler.Handle(command, CancellationToken.None));
     }
 
     [Fact]
@@ -119,30 +121,19 @@ public class CreateListingCommandTests
         
         var handler = new CreateListing.Handler(listingRepoMock.Object, ticketRepoMock.Object, userRepoMock.Object, ruleOptions);
         
-        await Assert.ThrowsAsync<ApplicationException>(() => handler.Handle(command, CancellationToken.None));
+        await Assert.ThrowsAsync<Infrastructure.Exceptions.ApplicationException>(() => handler.Handle(command, CancellationToken.None));
     }
 
     [Fact]
     public async Task CreateListing_WhenCommandIsIncorrect_ShouldThrowValidationException()
     {
-        var listingRepoMock = new Mock<ITicketListingRepository>();
-        var ticketRepoMock = new Mock<ITicketRepository>();
-        var userRepoMock = new Mock<IUserRepository>();
+        var command = new CreateListing.Command(-1, -1, "");
+        var validator = new CreateListing.CommandValidator();
 
-        var ruleOptions = new PriceRuleOptions();
+        var result = validator.TestValidate(command);
         
-        var handler = new CreateListing.Handler(listingRepoMock.Object, ticketRepoMock.Object, userRepoMock.Object, ruleOptions);
-        
-        var command = new CreateListing.Command(-1, 20, "1");
-
-        await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(command, CancellationToken.None));
-        
-        command = new CreateListing.Command(1, -20, "1");
-
-        await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(command, CancellationToken.None));
-        
-        command = new CreateListing.Command(1, 20, "");
-
-        await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(command, CancellationToken.None));
+        result.ShouldHaveValidationErrorFor(x => x.TicketId);
+        result.ShouldHaveValidationErrorFor(x => x.Price);
+        result.ShouldHaveValidationErrorFor(x => x.UserId);
     }
 }

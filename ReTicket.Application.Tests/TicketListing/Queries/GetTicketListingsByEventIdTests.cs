@@ -1,4 +1,5 @@
 using FluentValidation;
+using FluentValidation.TestHelper;
 using Moq;
 using ReTicket.Application.Abstractions;
 using ReTicket.Application.TicketListings.Query;
@@ -47,11 +48,11 @@ public class GetTicketListingsByEventIdTests
     [Fact]
     public async Task GetTicketListingsByEventId_WhenIdNotCorrect_ShouldThrowExceptionWithErrorMessage()
     {
-        var command = new GetTicketListingsByEventId.Query(0);
+        var command = new GetTicketListingsByEventId.Query(-1);
+        var validator = new GetTicketListingsByEventId.QueryValidator();
+
+        var result = validator.TestValidate(command);
         
-        var ticketListingRepoMock = new Mock<ITicketListingRepository>();
-        var handler = new GetTicketListingsByEventId.Handler(ticketListingRepoMock.Object);
-        
-        var exception = await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(command, CancellationToken.None));
+        result.ShouldHaveValidationErrorFor(x => x.EventId);
     }
 }

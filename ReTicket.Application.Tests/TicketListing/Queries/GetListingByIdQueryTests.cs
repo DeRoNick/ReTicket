@@ -1,6 +1,7 @@
 using Moq;
 using ReTicket.Application.Abstractions;
 using ReTicket.Application.TicketListings.Queries;
+using ApplicationException = ReTicket.Application.Infrastructure.Exceptions.ApplicationException;
 
 namespace ReTicket.Application.Tests.TicketListing.Queries;
 
