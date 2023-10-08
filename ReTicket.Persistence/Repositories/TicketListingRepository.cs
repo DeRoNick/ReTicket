@@ -7,7 +7,11 @@ namespace ReTicket.Persistence.Repositories
 {
     public class TicketListingRepository : BaseRepository<TicketListing>, ITicketListingRepository
     {
-        public TicketListingRepository(ReTicketDbContext context) : base(context) { }
+        private readonly ReTicketDbContext _db;
+        public TicketListingRepository(ReTicketDbContext context) : base(context)
+        { 
+            _db = context;
+        }
 
         public async Task<List<TicketListing>> GetAllForEventAsync(int eventId, CancellationToken cancellationToken)
         {
@@ -16,7 +20,7 @@ namespace ReTicket.Persistence.Repositories
 
         public async Task<TicketListing?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await BaseGetAsync(cancellationToken, id);
+            return await _db.TicketListings.Include(x => x.Ticket).FirstOrDefaultAsync(cancellationToken);
         }
 
         public async Task<int> InsertAsync(TicketListing ticket, CancellationToken cancellationToken)
