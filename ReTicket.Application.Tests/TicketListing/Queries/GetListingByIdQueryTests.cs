@@ -11,10 +11,7 @@ public class GetListingByIdQueryTests
     [Fact]
     public async Task GetListingById_WhenEverythingFine_ShouldReturnCorrectResult()
     {
-        var command = new GetListingById.Query
-        {
-            Id = 1
-        };
+        var command = new GetListingById.Query(1);
         
         var ticketListingRepoMock = new Mock<ITicketListingRepository>();
         var returns = new Domain.Models.TicketListing
@@ -39,10 +36,7 @@ public class GetListingByIdQueryTests
     [Fact]
     public async Task GetListingById_WhenIdNotCorrect_ShouldThrowExceptionWithErrorMessage()
     {
-        var command = new GetListingById.Query
-        {
-            Id = 0
-        };
+        var command = new GetListingById.Query(0);
         
         var ticketListingRepoMock = new Mock<ITicketListingRepository>();
         var handler = new GetListingById.Handler(ticketListingRepoMock.Object);

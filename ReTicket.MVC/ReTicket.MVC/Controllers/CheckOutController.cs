@@ -33,7 +33,7 @@ namespace ReTicket.MVC.Controllers
             var domain = "https://localhost:7067/";
             var options = new SessionCreateOptions
             {
-                SuccessUrl = domain + $"CheckOut/OrderConfirmation",
+                SuccessUrl = domain + $"CheckOut/OrderConfirmation?",
                 CancelUrl = domain + $"CheckOut/Login",
                 LineItems = new List<SessionLineItemOptions>()
                 {

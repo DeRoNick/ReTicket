@@ -42,8 +42,8 @@ namespace ReTicket.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Buy(int ticketListingId, string userId)
         {
-            var listing = await _mediator.Send(new GetListingById.Query() { Id = ticketListingId });
-            return RedirectToAction("CheckOut", controllerName: "CheckOut", new { price = listing.Price, eventName = listing.EventName, ticketCode = listing.TicketCode });
+            var listing = await _mediator.Send(new GetListingById.Query(ticketListingId));
+            return RedirectToAction("CheckOut", controllerName: "CheckOut", new { price = listing.Price, eventName = listing.Event.Name, ticketCode = listing.Ticket.Code });
             await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
             return View();
         }
@@ -52,15 +52,6 @@ namespace ReTicket.MVC.Controllers
         public IActionResult Create()
         {
             return View();
-        }
-
-        public async Task<IActionResult> Details(int listingId)
-        {
-            var command = new GetListingById.Query
-            {
-                Id = listingId
-            };
-            return View(await _mediator.Send(command));
         }
 
     }
