@@ -24,6 +24,12 @@ namespace ReTicket.Persistence.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
+        public async Task<List<Ticket>> GetAllForUserAsync(string userId, CancellationToken cancellationToken)
+        {
+            var query = GetQuery().Where(x => x.UserId == userId);
+            return await query.ToListAsync(cancellationToken);
+        }
+
         public async Task<Ticket?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             return await _db.Tickets.Include(x => x.Event).FirstOrDefaultAsync(cancellationToken);

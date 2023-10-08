@@ -8,5 +8,6 @@ namespace ReTicket.Application.Abstractions
         Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken);
         Task DeleteAsync(string title, CancellationToken cancellationToken);
         Task<List<Ticket>> GetAllForEventAsync(int eventId, CancellationToken cancellationToken);
+        Task<List<Ticket>> GetAllForUserAsync(string userId, CancellationToken cancellationToken);
     }
 }
