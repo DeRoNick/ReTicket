@@ -10,7 +10,7 @@ namespace ReTicket.Application.Events.Queries
         public class Command : IRequest<List<Event>>
         {
         }
-        internal sealed class Handler : IRequestHandler<Command, List<Event>>
+        public sealed class Handler : IRequestHandler<Command, List<Event>>
         {
             private readonly IEventRepository _eventRepo;
 

@@ -15,7 +15,7 @@ namespace ReTicket.Application.Events.Queries
                 Id = id;
             }
         }
-        internal sealed class Handler : IRequestHandler<Command, Event?>
+        public sealed class Handler : IRequestHandler<Command, Event?>
         {
             private readonly IEventRepository _eventRepo;
 
@@ -32,7 +32,8 @@ namespace ReTicket.Application.Events.Queries
         {
             public CommandValidator()
             {
-                _ = RuleFor(x => x.Id).NotEmpty();
+                _ = RuleFor(x => x.Id)
+                    .Must(x => x > 0).WithMessage("Id must be a positive number");
             }
         }
     }

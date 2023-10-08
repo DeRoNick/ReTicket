@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using ReTicket.Application.Abstractions;
 using ReTicket.Application.Infrastructure.Exceptions;
@@ -44,5 +45,14 @@ public static class GetListingById
         public int EventId { get; set; }
         public string UserId { get; set; }
         public decimal Price { get; set; }
+    }
+    
+    public class QueryValidator : AbstractValidator<Query>
+    {
+        public QueryValidator()
+        {
+            _ = RuleFor(x => x.Id)
+                .Must(x => x > 0).WithMessage("Id must be greater than 0.");
+        }
     }
 }
