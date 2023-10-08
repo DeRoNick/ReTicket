@@ -5,6 +5,9 @@ using ReTicket.Application.TicketListings.Commands;
 using ReTicket.Application.TicketListings.Queries;
 using ReTicket.Application.TicketListings.Query;
 using ReTicket.MVC.Models;
+using Stripe.Checkout;
+using Stripe;
+using ReTicket.Persistence.Repositories;
 
 namespace ReTicket.MVC.Controllers
 {
@@ -42,8 +45,8 @@ namespace ReTicket.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Buy(int ticketListingId, string userId)
         {
-            var listing = await _mediator.Send(new GetListingById.Query(ticketListingId));
-            return RedirectToAction("CheckOut", controllerName: "CheckOut", new { price = listing.Price, eventName = listing.Event.Name, ticketCode = listing.Ticket.Code });
+            var listing = await _mediator.Send(new GetListingById.Query() { Id = ticketListingId });
+            return RedirectToAction("CheckOut", controllerName: "CheckOut", new { price = listing.Price, eventName = listing.EventName, ticketCode = listing.TicketCode });
             await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
             return View();
         }
