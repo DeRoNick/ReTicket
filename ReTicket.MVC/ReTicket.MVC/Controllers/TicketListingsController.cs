@@ -22,7 +22,7 @@ namespace ReTicket.MVC.Controllers
         // GET: TicketListings
         public async Task<IActionResult> Index(int eventId)
         {
-            return View(await _mediator.Send(new GetTicketListingsByEventId.Query(eventId)));
+            return View(await _mediator.Send(new GetTicketListingsByEventId.Query(eventId))); //TODO NOW
         }
 
         [HttpPost]
