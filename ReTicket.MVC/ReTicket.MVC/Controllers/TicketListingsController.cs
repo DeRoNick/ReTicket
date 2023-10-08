@@ -43,7 +43,7 @@ namespace ReTicket.MVC.Controllers
         public async Task<IActionResult> Buy(int ticketListingId, string userId)
         {
             var listing = await _mediator.Send(new GetListingById.Query() { Id = ticketListingId });
-            new CheckOutController().CheckOut(listing.Price, listing.EventName, listing.TicketCode);
+            return RedirectToAction("CheckOut", controllerName: "CheckOut", new { price = listing.Price, eventName = listing.EventName, ticketCode = listing.TicketCode });
             await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
             return View();
         }

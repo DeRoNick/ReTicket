@@ -20,7 +20,7 @@ namespace ReTicket.Persistence.Repositories
 
         public async Task<TicketListing?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _db.TicketListings.Include(x => x.Ticket).FirstOrDefaultAsync(cancellationToken);
+            return await _db.TicketListings.Include(x => x.Ticket).Include(x => x.Event).FirstOrDefaultAsync(cancellationToken);
         }
 
         public async Task<int> InsertAsync(TicketListing ticket, CancellationToken cancellationToken)

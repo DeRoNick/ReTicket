@@ -37,9 +37,9 @@ namespace ReTicket.Application.TicketListings.Commands
             }
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
-                if (user == null)
-                    throw new Infrastructure.Exceptions.ApplicationException("User with that Id does not exist.");
+                //var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
+                //if (user == null)
+                //    throw new Infrastructure.Exceptions.ApplicationException("User with that Id does not exist.");
 
                 var listing = await _listingRepository.GetByIdAsync(request.ListingId, cancellationToken);
                 if (listing == null)
@@ -55,7 +55,7 @@ namespace ReTicket.Application.TicketListings.Commands
                     try
                     {
                         ticket.Code = Guid.NewGuid();
-                        ticket.UserId = user.Id;
+                        ticket.UserId = request.UserId;
                         ticket.Status = Domain.Enums.TicketStatus.Sold;
 
                         await _ticketRepository.UpdateAsync(ticket, cancellationToken);

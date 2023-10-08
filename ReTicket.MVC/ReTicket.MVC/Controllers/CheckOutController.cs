@@ -10,9 +10,10 @@ namespace ReTicket.MVC.Controllers
         {
             return View();
         }
+        [HttpGet]
         public IActionResult CheckOut(decimal price, string eventName, string ticketCode) 
         {
-            var domain = "https://localhost:7067";
+            var domain = "https://localhost:7067/";
             var options = new SessionCreateOptions
             {
                 SuccessUrl = domain + $"CheckOut/OrderConfirmation",
@@ -23,7 +24,7 @@ namespace ReTicket.MVC.Controllers
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            UnitAmountDecimal= price,
+                            UnitAmountDecimal= price*100,
                             Currency = "GEL",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
