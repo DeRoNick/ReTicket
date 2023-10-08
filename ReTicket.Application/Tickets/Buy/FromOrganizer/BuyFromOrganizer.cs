@@ -18,6 +18,7 @@ public static class BuyFromOrganizer
         private readonly IUserRepository _userRepo;
         private readonly IEventRepository _eventRepo;
         private readonly ITicketRepository _ticketRepo;
+        private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1,1);
         
         public Handler(IUserRepository userRepo, IEventRepository eventRepo, ITicketRepository ticketRepo)
         {
@@ -34,12 +35,12 @@ public static class BuyFromOrganizer
             var @event = await _eventRepo.GetByIdAsync(request.EventId, cancellationToken).ConfigureAwait(false);
             if (@event == null) throw new ApplicationException("No such event exists");
 
+            await _lock.WaitAsync(cancellationToken).ConfigureAwait(false);
             var ticket = await _ticketRepo.GetAllForEvent(request.EventId, cancellationToken).ConfigureAwait(false);
-
             var openTickets = ticket.Where(x => x.Status == TicketStatus.ForSale).ToList();
-
             if (openTickets.Count == 0)
             {
+                _lock.Release();
                 throw new ApplicationException("No more tickets left");
             }
 
@@ -48,7 +49,8 @@ public static class BuyFromOrganizer
             ticketToBuy.UserId = request.UserId;
             ticketToBuy.Code = Guid.NewGuid();
 
-            await _ticketRepo.UpdateAsync(ticketToBuy, cancellationToken).ConfigureAwait(false);
+            await _ticketRepo.UpdateAsync(ticketToBuy, cancellationToken);
+            _lock.Release();
         }
     }
 }
