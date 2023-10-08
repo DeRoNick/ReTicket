@@ -22,6 +22,7 @@ namespace ReTicket.Persistence.Configurations
 
             builder.Property(x => x.Code).ValueGeneratedNever().IsRequired();
             builder.Property(x => x.Status).HasDefaultValue(TicketStatus.ForSale);
+
         }
     }
 }

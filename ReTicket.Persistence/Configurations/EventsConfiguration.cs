@@ -14,12 +14,10 @@ namespace ReTicket.Persistence.Configurations
 
             builder.Property(x => x.Name).HasMaxLength(500);
             builder.Property(x => x.Location).HasMaxLength(500);
-            builder.Property(x => x.TicketPrice).HasColumnName("money");
-            builder.Property(x => x.TicketPrice).HasColumnName("money");
+            builder.Property(x => x.TicketPrice).HasColumnType("money");
 
-
-            builder.Property(x => x.StartDate).HasColumnName("datetime");
-            builder.Property(x => x.EndDate).HasColumnName("datetime");
+            builder.Property(x => x.StartDate).HasColumnType("datetime");
+            builder.Property(x => x.EndDate).HasColumnType("datetime");
 
         }
     }
