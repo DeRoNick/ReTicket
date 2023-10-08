@@ -5,7 +5,7 @@
     Layout = "_Layout";
 }
 
-<h1>Index</h1>
+<h1>Upcoming Events</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -52,7 +52,8 @@
                 </td>
                 <td>
                     <input type="button" value="Tickets" onclick="location.href='@Url.Action("Index", "Tickets")'" class="btn btn-primary" />
-                    <input type="button" value="ReTickets" onclick="location.href='@Url.Action("Index", "TicketListings")'" class="btn btn-danger" />
+                    <input type="button" value="ReTickets" onclick="location.href='@Url.Action("Index", "TicketListings", new { eventId = item.Id })'" class="btn btn-danger" />
+                    <input type="button" value="ReSell owned Ticket" onclick="location.href='@Url.Action("IndexForUser", "Tickets")'" class="btn btn-danger" />
                 </td>
             </tr>
         }

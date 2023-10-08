@@ -1,0 +1,10 @@
+﻿/* Apply dark mode styles to specific elements */
+body {
+    background-color: #231F20;
+    color: #fff;
+}
+
+/* Modify styles for specific elements */
+.display-4 {
+    color: #f0f0f0;
+}

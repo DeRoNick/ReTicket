@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ReTicket.MVC.Models.TicketViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<h1>Your currently or previously owned tickets:</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QRCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                ReSell
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td>
+                <img src="data:image/png;base64,@item.QRCode" alt="QR Code Image" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @if (item.Status == ReTicket.Domain.Enums.TicketStatus.Active)
+                {
+                    <input type="button" value="ReSell" onclick="location.href='@Url.Action("Create", "TicketListings")'" class="btn btn-danger" />
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

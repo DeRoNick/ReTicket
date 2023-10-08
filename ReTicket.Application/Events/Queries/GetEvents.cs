@@ -7,10 +7,10 @@ namespace ReTicket.Application.Events.Queries
 {
     public static class GetEvents
     {
-        public class Command : IRequest<List<Event>>
+        public class Query : IRequest<List<Event>>
         {
         }
-        public sealed class Handler : IRequestHandler<Command, List<Event>>
+        public sealed class Handler : IRequestHandler<Query, List<Event>>
         {
             private readonly IEventRepository _eventRepo;
 
@@ -18,14 +18,14 @@ namespace ReTicket.Application.Events.Queries
             {
                 _eventRepo = eventRepo;
             }
-            public async Task<List<Event>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<List<Event>> Handle(Query request, CancellationToken cancellationToken)
             {
                 return await _eventRepo.GetAllAsync(cancellationToken);
             }
         }
-        public class CommandValidator : AbstractValidator<Command>
+        public class QueryValidator : AbstractValidator<Query>
         {
-            public CommandValidator()
+            public QueryValidator()
             {
             }
         }
