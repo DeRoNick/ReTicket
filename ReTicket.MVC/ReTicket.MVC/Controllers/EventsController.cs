@@ -19,7 +19,7 @@ namespace ReTicket.MVC.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            return View(await _mediator.Send(new GetEvents.Command()));
+            return View(await _mediator.Send(new GetEvents.Query()));
         }
 
         // GET: Events/Details/5
@@ -27,7 +27,7 @@ namespace ReTicket.MVC.Controllers
         {
             if (id == null)
                 return RedirectToAction("Index");
-            var query = new GetEvent.Command((int)id);
+            var query = new GetEvent.Query((int)id);
             var @event = await _mediator.Send(query);
             if (@event == null)
                 return NotFound();
