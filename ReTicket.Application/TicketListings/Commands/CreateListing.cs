@@ -49,7 +49,12 @@ namespace ReTicket.Application.TicketListings.Commands
                 if (IsIllegalMargin(request, ticket))
                     throw new Infrastructure.Exceptions.ApplicationException("Price margin is higher than the legal limit");
 
+
+                ticket.Status = Domain.Enums.TicketStatus.ForResale;
+
                 var listing = new TicketListing() { Price = request.Price, TicketId = request.TicketId, UserId = request.UserId };
+
+                await _ticketRepository.UpdateAsync(ticket, cancellationToken);
 
                 return await _listingRepository.InsertAsync(listing, cancellationToken);
             }
