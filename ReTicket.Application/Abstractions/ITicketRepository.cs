@@ -6,6 +6,7 @@ namespace ReTicket.Application.Abstractions
     {
         Task<Ticket?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken);
-        Task<List<Ticket>> GetAllForEvent(int eventId, CancellationToken cancellationToken);
+        Task DeleteAsync(string title, CancellationToken cancellationToken);
+        Task<List<Ticket>> GetAllForEventAsync(int eventId, CancellationToken cancellationToken);
     }
 }

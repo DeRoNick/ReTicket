@@ -1,21 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ReTicket.Application.Events.Queries;
 using ReTicket.Domain.Models;
 
 namespace ReTicket.MVC.Controllers
 {
     public class EventsController : Controller
     {
-        ////CALL Mediatr
+        private readonly IMediator _mediator;
 
-        //// GET: Events
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View();
-        //      //return _context.Event != null ? 
-        //      //            View(await _context.Event.ToListAsync()) :
-        //      //            Problem("Entity set 'ReTicketMVCContext.Event'  is null.");
-        //}
+        public EventsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+
+        // GET: Events
+        public async Task<IActionResult> Index()
+        {
+            //TODO, buttons not working
+            return View(await _mediator.Send(new GetEvents.Command()));
+        }
 
         //// GET: Events/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -140,7 +146,7 @@ namespace ReTicket.MVC.Controllers
         //    {
         //        _context.Event.Remove(@event);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}

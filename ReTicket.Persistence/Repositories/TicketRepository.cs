@@ -13,7 +13,12 @@ namespace ReTicket.Persistence.Repositories
             _db = context;
         }
 
-        public async Task<List<Ticket>> GetAllForEvent(int eventId, CancellationToken cancellationToken)
+        public Task DeleteAsync(string title, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Ticket>> GetAllForEventAsync(int eventId, CancellationToken cancellationToken)
         {
             var query = GetQuery().Where(x => x.EventId == eventId);
             return await query.ToListAsync(cancellationToken);
