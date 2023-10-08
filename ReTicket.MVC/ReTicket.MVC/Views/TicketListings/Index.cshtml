@@ -25,7 +25,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.SellerUsername)
@@ -34,9 +34,15 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                <input type="button" value="Buy" onclick="location.href='@Url.Action("Buy", "TicketListings", new { ticketListingId = item.TicketListingId, userId = userId })'" class="btn btn-danger" />
+                <input type="button" value="Buy" onclick="location.href='@Url.Action("Buy", "TicketListings", new { ticketListingId = item.TicketListingId, userId = userId })'" class="btn btn-success" />
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+
+<div>
+    <p></p>
+    <input type="button" value="Back to Event list" onclick="location.href='@Url.Action("Index", "Events")'" class="btn btn-primary" />
+    <p></p>
+</div>
