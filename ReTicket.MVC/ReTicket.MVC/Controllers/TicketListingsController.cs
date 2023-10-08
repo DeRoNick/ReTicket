@@ -6,33 +6,47 @@ using ReTicket.Application.TicketListings.Commands;
 using ReTicket.Application.TicketListings.Queries;
 using ReTicket.Application.TicketListings.Query;
 using ReTicket.Domain.Models;
+using ReTicket.MVC.Models;
 
 namespace ReTicket.MVC.Controllers
 {
     public class TicketListingsController : Controller
     {
         private readonly IMediator _mediator;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        public TicketListingsController(IMediator mediator, SignInManager<IdentityUser> signInManager)
+        private readonly UserManager<IdentityUser> _userManager;
+        public TicketListingsController(IMediator mediator, UserManager<IdentityUser> userManager)
         {
             _mediator = mediator;
-            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         // GET: TicketListings
         public async Task<IActionResult> Index(int eventId)
         {
-            return View(await _mediator.Send(new GetTicketListingsByEventId.Query(eventId))); //TODO NOW
+            var ticketListings = await _mediator.Send(new GetTicketListingsByEventId.Query(eventId));
+
+            var ticketListingsViewModel = new List<TicketListingViewModel>();
+
+            foreach (var ticketListing in ticketListings)
+            {
+                var identityUser = await _userManager.FindByIdAsync(ticketListing.UserId);
+
+                var ticketListingViewModel = new TicketListingViewModel
+                {
+                    SellerUsername = identityUser.UserName,
+                    Price = ticketListing.Price,
+                    TicketListingId = ticketListing.Id
+                };
+                ticketListingsViewModel.Add(ticketListingViewModel);
+            }
+
+            return View(ticketListingsViewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Buy(string eventId, string userId)
+        [HttpGet]
+        public async Task<IActionResult> Buy(int ticketListingId, string userId)
         {
-            //get ticketId by eventid
-
-            int listingId = 5;//= //await _mediator.Send()
-
-            await _mediator.Send(new BuyListing.Command(listingId, userId));
+            await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
 
             return RedirectToAction("Index");
         }
@@ -67,15 +81,15 @@ namespace ReTicket.MVC.Controllers
 
         // POST: TicketListings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        [HttpPost]
+        //[HttpPost]
 
-        public async Task<IActionResult> Create(TicketListing ticketListing)
-        {
-            if (!_signInManager.IsSignedIn(User) || !ModelState.IsValid) return View();
-            var command = new CreateListing.Command(ticketListing.TicketId, ticketListing.Price,
-                User.FindFirstValue(ClaimTypes.NameIdentifier));
-            return RedirectToAction("Details", await _mediator.Send(command));
-        }
+        //public async Task<IActionResult> Create(TicketListing ticketListing)
+        //{
+            //if (!_signInManager.IsSignedIn(User) || !ModelState.IsValid) return View();
+            //var command = new CreateListing.Command(ticketListing.TicketId, ticketListing.Price,
+            //    User.FindFirstValue(ClaimTypes.NameIdentifier));
+            //return RedirectToAction("Details", await _mediator.Send(command));
+        //}
 
         public async Task<IActionResult> Details(int listingId)
         {
