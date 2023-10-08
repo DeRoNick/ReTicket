@@ -11,7 +11,7 @@ public class GetEventsQueryTests
     [Fact]
     public async Task GetEventsQuery_WhenEverythingFine_ShouldReturnCorrectResult()
     {
-        var command = new GetEvents.Command();
+        var command = new GetEvents.Query();
         
         var mock = new Mock<IEventRepository>();
         var domainEvents = new List<Event>

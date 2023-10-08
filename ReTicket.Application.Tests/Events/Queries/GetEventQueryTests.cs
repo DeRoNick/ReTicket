@@ -14,7 +14,7 @@ public class GetEventQueryTests
     public async Task GetEventQueryHandler_WhenEverythingFine_ShouldReturnCorrectResult()
     {
         var id = 1;
-        var command = new GetEvent.Command(id);
+        var command = new GetEvent.Query(id);
 
         var mock = new Mock<IEventRepository>();
         var domainEvent = new Event
@@ -29,7 +29,7 @@ public class GetEventQueryTests
 
         var handler = new GetEvent.Handler(mock.Object);
 
-        var result = await handler.Handle(new GetEvent.Command(id), CancellationToken.None);
+        var result = await handler.Handle(new GetEvent.Query(id), CancellationToken.None);
         
         Assert.NotNull(result);
         Assert.Equal(domainEvent.Name, result!.Name);
@@ -41,8 +41,8 @@ public class GetEventQueryTests
     [Fact]
     public async Task GetEventQueryHandler_WhenIdNotPositive_ShouldThrowExceptionWithErrorMessage()
     {
-        var command = new GetEvent.Command(-1);
-        var validator = new GetEvent.CommandValidator();
+        var command = new GetEvent.Query(-1);
+        var validator = new GetEvent.QueryValidator();
 
         var result = validator.TestValidate(command);
 
