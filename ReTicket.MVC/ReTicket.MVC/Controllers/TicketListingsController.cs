@@ -5,6 +5,9 @@ using ReTicket.Application.TicketListings.Commands;
 using ReTicket.Application.TicketListings.Queries;
 using ReTicket.Application.TicketListings.Query;
 using ReTicket.MVC.Models;
+using Stripe.Checkout;
+using Stripe;
+using ReTicket.Persistence.Repositories;
 
 namespace ReTicket.MVC.Controllers
 {
@@ -43,9 +46,35 @@ namespace ReTicket.MVC.Controllers
         public async Task<IActionResult> Buy(int ticketListingId, string userId)
         {
             var listing = await _mediator.Send(new GetListingById.Query() { Id = ticketListingId });
-            return RedirectToAction("CheckOut", controllerName: "CheckOut", new { price = listing.Price, eventName = listing.EventName, ticketCode = listing.TicketCode });
-            await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
-            return View();
+            var domain = "https://localhost:7067/";
+            var options = new SessionCreateOptions
+            {
+                SuccessUrl = domain + $"CheckOut/OrderConfirmation?ticketListingId={ticketListingId}",
+                CancelUrl = domain + $"CheckOut/Login",
+                LineItems = new List<SessionLineItemOptions>()
+                {
+                    new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmountDecimal= listing.Price*100,
+                            Currency = "GEL",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = listing.EventName + " " + listing.TicketCode,
+                            },
+
+                        },
+                        Quantity = 1
+                    }
+                },
+                Mode = "payment",
+            };
+            var service = new SessionService();
+            Session session = service.Create(options);
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
+            //await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
         }
 
         // GET: TicketListings/Create
