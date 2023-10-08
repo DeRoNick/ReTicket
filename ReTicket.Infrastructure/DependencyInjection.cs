@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using RestEase.HttpClientFactory;
 using ReTicket.Application.Infrastructure.Paypal;
 using ReTicket.Infrastructure.RestEase;
+using Stripe;
 
 namespace ReTicket.Infrastructure;
 
@@ -26,6 +27,7 @@ public static class DependencyInjection
                 };
             }
         });
+        StripeConfiguration.ApiKey = configuration.GetSection("Stripe:SecretKey").Get<string>();
         return services; 
     }
 }
