@@ -36,7 +36,7 @@ public static class BuyFromOrganizer
             if (@event == null) throw new ApplicationException("No such event exists");
 
             await _lock.WaitAsync(cancellationToken).ConfigureAwait(false);
-            var ticket = await _ticketRepo.GetAllForEvent(request.EventId, cancellationToken).ConfigureAwait(false);
+            var ticket = await _ticketRepo.GetAllForEventAsync(request.EventId, cancellationToken).ConfigureAwait(false);
             var openTickets = ticket.Where(x => x.Status == TicketStatus.ForSale).ToList();
             if (openTickets.Count == 0)
             {

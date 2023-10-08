@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReTicket.Application.Tickets.Query;
 using ReTicket.Domain.Models;
 
 namespace ReTicket.MVC.Controllers
 {
     public class TicketsController : Controller
     {
+        private readonly IMediator _mediator;
+
+        public TicketsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        public async Task<IActionResult> Index(int eventId)
+        {
+            return View(await _mediator.Send(new GetTicketsByEventId.Query(eventId)));
+        }
 
         //// GET: Tickets
         //public async Task<IActionResult> Index()
@@ -154,7 +167,7 @@ namespace ReTicket.MVC.Controllers
         //    {
         //        _context.Ticket.Remove(ticket);
         //    }
-            
+
         //    await _context.SaveChangesAsync();
         //    return RedirectToAction(nameof(Index));
         //}

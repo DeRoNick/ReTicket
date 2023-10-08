@@ -19,8 +19,8 @@ namespace ReTicket.MVC.Controllers
         // GET: Events
         public async Task<IActionResult> Index()
         {
-            await _mediator.Send(new GetEvents.Command());
-            return View();
+            //TODO, buttons not working
+            return View(await _mediator.Send(new GetEvents.Command()));
         }
 
         //// GET: Events/Details/5

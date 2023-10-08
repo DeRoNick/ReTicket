@@ -6,6 +6,10 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReTicket.Application.Events.Queries;
+using ReTicket.Application.TicketListings.Commands;
+using ReTicket.Application.TicketListings.Query;
+using ReTicket.Application.Tickets.Query;
 using ReTicket.Domain.Models;
 
 namespace ReTicket.MVC.Controllers
@@ -18,12 +22,24 @@ namespace ReTicket.MVC.Controllers
             _mediator = mediator;
         }
 
-        //// GET: TicketListings
-        public async Task<IActionResult> Index()
+        // GET: TicketListings
+        public async Task<IActionResult> Index(int eventId)
         {
-            //var reTicketMVCContext = _context.TicketListing.Include(t => t.Event).Include(t => t.Ticket).Include(t => t.User);
+            return View(await _mediator.Send(new GetTicketListingsByEventId.Query(eventId)));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Buy(string eventId, string userId)
+        {
+            //get ticketId by eventid
+
+            int listingId = 5;//= //await _mediator.Send()
+
+            await _mediator.Send(new BuyListing.Command(listingId, userId));
+
             return View();
         }
+
 
         //// GET: TicketListings/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -55,7 +71,6 @@ namespace ReTicket.MVC.Controllers
         // POST: TicketListings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
-
         public async Task<IActionResult> Create(TicketListing ticketListing)
         {
             if (ModelState.IsValid)
