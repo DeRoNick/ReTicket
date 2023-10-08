@@ -23,23 +23,17 @@ namespace ReTicket.MVC.Controllers
             return View(await _mediator.Send(new GetEvents.Command()));
         }
 
-        //// GET: Events/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.Event == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var @event = await _context.Event
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (@event == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(@event);
-        //}
+        // GET: Events/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("Index");
+            var query = new GetEvent.Command((int)id);
+            var @event = await _mediator.Send(query);
+            if (@event == null)
+                return NotFound();
+            return View(@event);
+        }
 
         //// GET: Events/Create
         //public IActionResult Create()
@@ -112,48 +106,6 @@ namespace ReTicket.MVC.Controllers
         //        return RedirectToAction(nameof(Index));
         //    }
         //    return View(@event);
-        //}
-
-        //// GET: Events/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Event == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var @event = await _context.Event
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (@event == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(@event);
-        //}
-
-        //// POST: Events/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.Event == null)
-        //    {
-        //        return Problem("Entity set 'ReTicketMVCContext.Event'  is null.");
-        //    }
-        //    var @event = await _context.Event.FindAsync(id);
-        //    if (@event != null)
-        //    {
-        //        _context.Event.Remove(@event);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool EventExists(int id)
-        //{
-        //  return (_context.Event?.Any(e => e.Id == id)).GetValueOrDefault();
         //}
     }
 }
