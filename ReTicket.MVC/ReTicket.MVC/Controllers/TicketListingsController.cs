@@ -51,19 +51,19 @@ namespace ReTicket.MVC.Controllers
 
         // POST: TicketListings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TicketListing ticketListing)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(ticketListing);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+        //[HttpPost]
+        ////[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(TicketListing ticketListing)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(ticketListing);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            return View(ticketListing);
-        }
+        //    return View(ticketListing);
+        //}
 
         //// GET: TicketListings/Edit/5
         //public async Task<IActionResult> Edit(int? id)
