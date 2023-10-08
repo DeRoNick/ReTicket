@@ -2,19 +2,15 @@
 using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Models;
 using ReTicket.Persistence.Database;
-using System.Threading;
 
 namespace ReTicket.Persistence.Repositories
 {
     public class TicketRepository : BaseRepository<Ticket>, ITicketRepository
     {
+        private readonly ReTicketDbContext _db;
         public TicketRepository(ReTicketDbContext context) : base(context)
         {
-        }
-
-        public Task DeleteAsync(string title, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            _db = context;
         }
 
         public async Task<List<Ticket>> GetAllForEvent(int eventId, CancellationToken cancellationToken)
@@ -23,9 +19,9 @@ namespace ReTicket.Persistence.Repositories
             return await query.ToListAsync(cancellationToken);
         }
 
-        public Task<Ticket?> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<Ticket?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return BaseGetAsync(cancellationToken, id);
+            return await _db.Tickets.Include(x => x.Event).FirstOrDefaultAsync(cancellationToken);
         }
 
         public async Task UpdateAsync(Ticket ticket, CancellationToken cancellationToken)
