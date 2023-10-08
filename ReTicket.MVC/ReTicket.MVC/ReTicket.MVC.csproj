@@ -23,8 +23,4 @@
     <ProjectReference Include="..\..\ReTicket.Persistence\ReTicket.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\TicketListing\" />
-  </ItemGroup>
-
 </Project>
