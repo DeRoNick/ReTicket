@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,18 @@ namespace ReTicket.MVC.Controllers
 {
     public class TicketListingsController : Controller
     {
+        private readonly IMediator _mediator;
+        public TicketListingsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         //// GET: TicketListings
-        //public async Task<IActionResult> Index()
-        //{
-        //    var reTicketMVCContext = _context.TicketListing.Include(t => t.Event).Include(t => t.Ticket).Include(t => t.User);
-        //    return View(await reTicketMVCContext.ToListAsync());
-        //}
+        public async Task<IActionResult> Index()
+        {
+            //var reTicketMVCContext = _context.TicketListing.Include(t => t.Event).Include(t => t.Ticket).Include(t => t.User);
+            return View();
+        }
 
         //// GET: TicketListings/Details/5
         //public async Task<IActionResult> Details(int? id)
@@ -40,26 +46,21 @@ namespace ReTicket.MVC.Controllers
         //    return View(ticketListing);
         //}
 
-        //// GET: TicketListings/Create
-        //public IActionResult Create()
-        //{
-        //    ViewData["EventId"] = new SelectList(_context.Set<Event>(), "Id", "Location");
-        //    ViewData["TicketId"] = new SelectList(_context.Set<Ticket>(), "Id", "UserId");
-        //    ViewData["UserId"] = new SelectList(_context.Set<AppUser>(), "Id", "Id");
-        //    return View();
-        //}
+        // GET: TicketListings/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         // POST: TicketListings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Create(TicketListing ticketListing)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ticketListing);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await _mediator.Send(ticketListing);
             }
 
             return View(ticketListing);
