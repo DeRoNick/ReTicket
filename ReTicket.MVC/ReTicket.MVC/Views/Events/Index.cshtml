@@ -51,12 +51,8 @@
                     @Html.DisplayFor(modelItem => item.Location)
                 </td>
                 <td>
-                    <div>
-                        <a asp-controller="Tickets" asp-action="Index" asp-route-id="@item.Id" class="btn btn-primary">Tickets</a>
-                    </div>
-                    <div>
-                        <a asp-controller="TicketListings" asp-action="Index" asp-route-id="@item.Id" class="btn btn-danger">ReTickets</a>
-                    </div>
+                    <input type="button" value="Tickets" onclick="location.href='@Url.Action("Index", "Tickets")'" class="btn btn-primary" />
+                    <input type="button" value="ReTickets" onclick="location.href='@Url.Action("Index", "TicketListings")'" class="btn btn-danger" />
                 </td>
             </tr>
         }
