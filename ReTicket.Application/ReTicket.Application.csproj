@@ -10,6 +10,7 @@
       <PackageReference Include="FluentValidation" Version="11.7.1" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
       <PackageReference Include="MediatR" Version="12.1.1" />
+      <PackageReference Include="QRCoder" Version="1.4.3" />
       <PackageReference Include="RestEase" Version="1.6.4" />
     </ItemGroup>
 
@@ -19,12 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-<<<<<<< HEAD
-      <Folder Include="Tickets\Buy\FromOrganizer" />
-=======
       <ProjectReference Include="..\ReTicket.Domain\ReTicket.Domain.csproj" />
->>>>>>> origin/main
-        <Nullable>disable</Nullable>
       <PackageReference Include="RestEase" Version="1.6.4" />
     </ItemGroup>
 
