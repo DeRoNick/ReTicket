@@ -1,7 +1,7 @@
 using MediatR;
 using ReTicket.Application.Abstractions;
 using ReTicket.Domain.Enums;
-using ApplicationException = ReTicket.Application.Exceptions.ApplicationException;
+using ApplicationException = ReTicket.Application.Infrastructure.Exceptions.ApplicationException;
 
 namespace ReTicket.Application.Tickets.Buy.FromOrganizer;
 
