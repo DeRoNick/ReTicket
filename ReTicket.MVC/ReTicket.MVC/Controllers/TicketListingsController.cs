@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ReTicket.Application.Events.Queries;
 using ReTicket.Application.TicketListings.Commands;
 using ReTicket.Application.TicketListings.Queries;
 using ReTicket.Application.TicketListings.Query;
@@ -26,38 +27,16 @@ namespace ReTicket.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Buy(string eventId, string userId)
+        public async Task<IActionResult> Buy(int ticketListingId, string userId)
         {
-            //get ticketId by eventid
+            var listing = await _mediator.Send(new GetListingById.Query() { Id = ticketListingId});
 
-            int listingId = 5;//= //await _mediator.Send()
+            new CheckOutController().CheckOut(listing.Price, listing.EventName, listing.TicketCode);
 
-            await _mediator.Send(new BuyListing.Command(listingId, userId));
+            await _mediator.Send(new BuyListing.Command(ticketListingId, userId));
 
             return RedirectToAction("Index");
         }
-
-
-        //// GET: TicketListings/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.TicketListing == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var ticketListing = await _context.TicketListing
-        //        .Include(t => t.Event)
-        //        .Include(t => t.Ticket)
-        //        .Include(t => t.User)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (ticketListing == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(ticketListing);
-        //}
 
         // GET: TicketListings/Create
         public IActionResult Create()
@@ -85,29 +64,6 @@ namespace ReTicket.MVC.Controllers
             };
             return View(await _mediator.Send(command));
         }
-
-       
-
-        //// GET: TicketListings/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.TicketListing == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var ticketListing = await _context.TicketListing
-        //        .Include(t => t.Event)
-        //        .Include(t => t.Ticket)
-        //        .Include(t => t.User)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (ticketListing == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(ticketListing);
-        //}
 
     }
 }

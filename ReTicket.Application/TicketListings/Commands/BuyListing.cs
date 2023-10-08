@@ -47,18 +47,7 @@ namespace ReTicket.Application.TicketListings.Commands
 
                 var ticket = await _ticketRepository.GetByIdAsync(listing.TicketId, cancellationToken);
                 if (ticket == null)
-                    throw new Infrastructure.Exceptions.ApplicationException("Ticket with that Id does not exist.");
-
-                try
-                {
-                    var commissionAmount = GetCommissionAmount(listing);
-                    //external paying service, make them pay listing amount + commission amount, transfer commissionamount to companys account
-
-                }
-                catch (Exception e)
-                {
-                    throw new Infrastructure.Exceptions.ApplicationException("Error During payment process, try again later.", e.Message);
-                }
+                    throw new Infrastructure.Exceptions.ApplicationException("Ticket with that Id does not exist.");              
 
 
                 using (var dbContextTransaction = await _transactionProvider.CreateTransactionScope(cancellationToken))
@@ -82,11 +71,6 @@ namespace ReTicket.Application.TicketListings.Commands
                         throw new Infrastructure.Exceptions.ApplicationException(e.Message);
                     }
                 }
-            }
-
-            private decimal GetCommissionAmount(TicketListing listing)
-            {
-                return listing.Price * _priceRuleOptions.MarginCommissionPercentage / 100;
             }
         }
         public class CommandValidator : AbstractValidator<Command>

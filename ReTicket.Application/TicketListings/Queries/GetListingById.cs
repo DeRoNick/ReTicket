@@ -32,7 +32,9 @@ public static class GetListingById
                 UserId = result.UserId,
                 TicketId = result.TicketId,
                 EventId = result.EventId,
-                Price = result.Price
+                Price = result.Price,
+                EventName = result.Event.Name,
+                TicketCode = result.Ticket.Code.ToString()
             };
         }
     }
@@ -42,7 +44,10 @@ public static class GetListingById
         public int Id { get; set; }
         public int TicketId { get; set; }
         public int EventId { get; set; }
+        public string EventName { get; set; }
         public string UserId { get; set; }
+        public string TicketCode { get; set; }
+
         public decimal Price { get; set; }
     }
 }
