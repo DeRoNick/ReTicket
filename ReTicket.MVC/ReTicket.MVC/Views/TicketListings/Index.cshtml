@@ -1,8 +1,10 @@
-﻿@model IEnumerable<ReTicket.Domain.Models.TicketListing>
+﻿@model IEnumerable<ReTicket.MVC.Models.TicketListingViewModel>
+@using System.Security.Claims
 
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
 <h1>Available ReTickets for the event</h1>
@@ -11,16 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Ticket)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Event)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
+                Seller's Username
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                Make your decision :)
             </th>
             <th></th>
         </tr>
@@ -29,16 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Ticket.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Event.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.SellerUsername)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <input type="button" value="Buy" onclick="location.href='@Url.Action("Buy", "TicketListings", new { ticketListingId = item.TicketListingId, userId = userId })'" class="btn btn-danger" />
             </td>
         </tr>
 }

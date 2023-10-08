@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReTicket.MVC", "ReTicket.MVC\ReTicket.MVC\ReTicket.MVC.csproj", "{29343D46-BD5C-44A6-9636-123AC4502BF3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{30594992-FAB6-4A25-A1ED-C0BA197063E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReTicket.Application.Tests", "ReTicket.Application.Tests\ReTicket.Application.Tests.csproj", "{E08A4CB7-5D07-4DD1-906A-0C562C8D82E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,10 @@ Global
 		{29343D46-BD5C-44A6-9636-123AC4502BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29343D46-BD5C-44A6-9636-123AC4502BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29343D46-BD5C-44A6-9636-123AC4502BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E08A4CB7-5D07-4DD1-906A-0C562C8D82E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E08A4CB7-5D07-4DD1-906A-0C562C8D82E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E08A4CB7-5D07-4DD1-906A-0C562C8D82E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E08A4CB7-5D07-4DD1-906A-0C562C8D82E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{B6FB0D27-2E73-4F6E-A38A-FE90C60E8182} = {5B8C7DD5-9B9B-4B46-9C92-24749A20D1BE}
 		{CD6F6087-CCB7-4DCF-B2B6-FDE328859EF5} = {5B8C7DD5-9B9B-4B46-9C92-24749A20D1BE}
 		{29343D46-BD5C-44A6-9636-123AC4502BF3} = {3BE6677C-0F68-4867-BE13-79C03061616E}
+		{E08A4CB7-5D07-4DD1-906A-0C562C8D82E4} = {30594992-FAB6-4A25-A1ED-C0BA197063E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {269E1A6B-685B-462D-83D4-2A1270589073}
